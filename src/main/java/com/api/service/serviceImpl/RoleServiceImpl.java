@@ -3,6 +3,7 @@ package com.api.service.serviceImpl;
 import com.api.exceptions.ResourceNotFoundExption;
 import com.api.model.Role;
 import com.api.model.UserDao;
+import com.api.model.dto.RoleResponseDto;
 import com.api.repository.RoleRepository;
 import com.api.repository.UserRepository;
 import com.api.service.RoleService;
@@ -32,20 +33,19 @@ public class RoleServiceImpl implements RoleService {
         roleRepository.delete(role);
     }
 
-    public List<Role> fetchAllRoles()
+    public List<RoleResponseDto> fetchAllRoles()
     {
         List<Role>roles = roleRepository.findAll();
-        Set<Role> roleList = new HashSet<>();
-        for (Role role: roles)
-        {
-               roleList.add( Role.builder()
-                       .roleName(role.getRoleName())
-                       .id(role.getId())
-                       .users(role.getUsers())
-                       .build());
+        Set< RoleResponseDto> roleList = new HashSet<>();
+        roles.forEach((role)->{
+            roleList.add(RoleResponseDto.builder()
+                    .roleName(role.getRoleName())
+                    .id(role.getId())
+                    .users(role.getUsers())
+                    .build());
+        });
 
-        }
-        return new ArrayList<Role>(roleList);
+        return new ArrayList<RoleResponseDto>(roleList);
     }
     public Role fetchRole(long id)
     {

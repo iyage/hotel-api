@@ -6,6 +6,7 @@ import com.api.model.UserDao;
 import com.api.model.dto.AddUserRoleDto;
 import com.api.model.dto.ResponseDto;
 import com.api.model.dto.RoleDto;
+import com.api.model.dto.RoleResponseDto;
 import com.api.repository.RoleRepository;
 import com.api.repository.UserRepository;
 import com.api.service.serviceImpl.RoleServiceImpl;
@@ -70,8 +71,7 @@ public class RoleController {
     @GetMapping("/get_all_roles")
     public ResponseEntity<ResponseDto> fetchAllRoles(WebRequest request)
     {
-         List<Role> roleList = roleService.fetchAllRoles();
-
+         List<RoleResponseDto> roleList = roleService.fetchAllRoles();
         ResponseDto responseDto = new ResponseDto(
                 "success","200",roleList,
                 request.getDescription(false),new Date() );
