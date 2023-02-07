@@ -23,6 +23,6 @@ public class UserDao {
     private String email;
    @JsonIgnore
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role>roles = new HashSet<>();
 }
