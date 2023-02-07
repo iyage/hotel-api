@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -31,7 +34,18 @@ public class RoleServiceImpl implements RoleService {
 
     public List<Role> fetchAllRoles()
     {
-        return  roleRepository.findAll();
+        List<Role>roles = roleRepository.findAll();
+        Set<Role> roleList = new HashSet<>();
+        for (Role role: roles)
+        {
+               roleList.add( Role.builder()
+                       .roleName(role.getRoleName())
+                       .id(role.getId())
+                       .users(role.getUsers())
+                       .build());
+
+        }
+        return new ArrayList<Role>(roleList);
     }
     public Role fetchRole(long id)
     {
