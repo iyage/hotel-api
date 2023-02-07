@@ -56,7 +56,7 @@ public class RoleController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/delete_role/{id}")
+    @DeleteMapping("/delete_role/{id}")
     public ResponseEntity<ResponseDto> deleteRole(@PathVariable( value = "id")   long id,WebRequest request) {
           roleService.deleteRole(id);
         ResponseDto responseDto = new ResponseDto(
@@ -66,7 +66,7 @@ public class RoleController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/get_all_roles")
+    @GetMapping("/get_all_roles")
     public ResponseEntity<ResponseDto> fetchAllRoles(WebRequest request)
     {
          List<Role> roleList = roleService.fetchAllRoles();
