@@ -5,6 +5,7 @@ import com.api.model.Role;
 import com.api.model.UserDao;
 import com.api.model.dto.AddUserRoleDto;
 import com.api.model.dto.ResponseDto;
+import com.api.model.dto.RoleDto;
 import com.api.repository.RoleRepository;
 import com.api.repository.UserRepository;
 import com.api.service.serviceImpl.RoleServiceImpl;
@@ -31,10 +32,10 @@ public class RoleController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/new_role")
-    public ResponseEntity<ResponseDto>addNewRole(@RequestBody String  role,WebRequest request)
+    public ResponseEntity<ResponseDto>addNewRole(@RequestBody RoleDto role, WebRequest request)
     {
         Role newRole = new Role();
-          newRole.setRoleName(role);
+          newRole.setRoleName(role.getRoleName());
         ResponseDto responseDto = new ResponseDto(
                 "success","201",roleService.addNewRole(newRole),
                 request.getDescription(false),new Date() );

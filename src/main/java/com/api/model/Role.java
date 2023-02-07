@@ -19,6 +19,6 @@ public class Role {
     private Long id;
     private String roleName;
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL)
     private Set<UserDao>users = new HashSet<>();
 }
