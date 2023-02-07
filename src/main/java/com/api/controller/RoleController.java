@@ -31,10 +31,10 @@ public class RoleController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/new_role")
-    public ResponseEntity<ResponseDto>addNewRole(@RequestBody Role role,WebRequest request)
+    public ResponseEntity<ResponseDto>addNewRole(@RequestBody String  role,WebRequest request)
     {
         Role newRole = new Role();
-          newRole.setRoleName(role.getRoleName());
+          newRole.setRoleName(role);
         ResponseDto responseDto = new ResponseDto(
                 "success","201",roleService.addNewRole(newRole),
                 request.getDescription(false),new Date() );
