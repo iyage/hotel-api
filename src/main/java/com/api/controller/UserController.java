@@ -1,7 +1,6 @@
 package com.api.controller;
 
 import com.api.config.JwtTokenUtil;
-import com.api.config.S3Util;
 import com.api.model.JwtRequest;
 import com.api.model.UserDao;
 import com.api.model.UserDto;

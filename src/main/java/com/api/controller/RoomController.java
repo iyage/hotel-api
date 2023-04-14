@@ -1,6 +1,5 @@
 package com.api.controller;
 
-import com.api.config.S3Util;
 import com.api.model.Photos;
 import com.api.model.Room;
 import com.api.model.dto.BookingDto;
@@ -15,14 +14,10 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 
-
-
 @RestController
 public class RoomController {
 @Autowired
     RoomServiceImpl roomService;
-    @Autowired
-    S3Util s3Util;
  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/add_new_room")
     public ResponseEntity<ResponseDto> addNewRoom(@RequestBody  Room room,WebRequest request) {
@@ -67,25 +62,25 @@ public class RoomController {
         ResponseDto responseDto = new ResponseDto("success","200",roomService.getRoom(id),request.getDescription(false),new Date());
         return new ResponseEntity<>(responseDto,HttpStatus.OK);
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/upload/{roomId}")
-    public ResponseEntity<ResponseDto> handleUploadForm(@PathVariable(value = "roomId") long roomId, @RequestParam("file") MultipartFile multipart, WebRequest request) {
-        String fileName = multipart.getOriginalFilename();
-        String photoUrl = "";
-        System.out.println(roomId);
-
-
-        try {
-            photoUrl =s3Util.uploadFile(fileName, multipart.getInputStream());
-            Photos photo = new Photos();
-            photo.setUrl(photoUrl);
-            Room room = roomService.addPhotoToRoom(photo,roomId);
-
-            return  new ResponseEntity<>(new ResponseDto("success","200",room,request.getDescription(false),new Date()),HttpStatus.OK);
-        } catch (Exception ex) {
-
-            return  new ResponseEntity<>(new ResponseDto("fail","500",ex.getMessage(),request.getDescription(false),new Date()),HttpStatus.BAD_REQUEST);
-        }
-
-    }
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PostMapping("/upload/{roomId}")
+//    public ResponseEntity<ResponseDto> handleUploadForm(@PathVariable(value = "roomId") long roomId, @RequestParam("file") MultipartFile multipart, WebRequest request) {
+//        String fileName = multipart.getOriginalFilename();
+//        String photoUrl = "";
+//        System.out.println(roomId);
+//
+//
+//        try {
+//            photoUrl =s3Util.uploadFile(fileName, multipart.getInputStream());
+//            Photos photo = new Photos();
+//            photo.setUrl(photoUrl);
+//            Room room = roomService.addPhotoToRoom(photo,roomId);
+//
+//            return  new ResponseEntity<>(new ResponseDto("success","200",room,request.getDescription(false),new Date()),HttpStatus.OK);
+//        } catch (Exception ex) {
+//
+//            return  new ResponseEntity<>(new ResponseDto("fail","500",ex.getMessage(),request.getDescription(false),new Date()),HttpStatus.BAD_REQUEST);
+//        }
+//
+//    }
 }
